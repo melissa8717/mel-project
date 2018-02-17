@@ -15,6 +15,10 @@ $sql = new SQL($db);
 $listeJeux = $sql->getList();
 //$listeJeux = $sql->supprimer();
 ?>
+<h2><a href="../class.jeu.php">Créer un jeu :</a></h2>
+<h2><a href="../listJeu.php">Voir les jeux :</a></h2>
+<h2><a href="form_user.php">Créer un utilisateur :</a></h2>
+<h2><a href="listUser.php">Voir les utilisateur :</a></h2>
 
 <table>
   <tr>

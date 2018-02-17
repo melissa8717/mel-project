@@ -10,8 +10,11 @@
   	<h1>Bienvenue dans votre ludothèque !</h1>
   <table>
   	<tr>
-  		<td><a href="newJeu.php"> Créer un jeu</a></td>
-      
+      <h2><a href="../class.jeu.php">Créer un jeu :</a></h2>
+      <h2><a href="../listJeu.php">Voir les jeux :</a></h2>
+  <h2><a href="form_user.php">Créer un utilisateur :</a></h2><br />
+  <h2><a href="../listUser.php">Voir les utilisateur :</a></h2>
+
   	</tr>
   </table>
   </body>

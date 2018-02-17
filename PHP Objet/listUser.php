@@ -12,7 +12,7 @@ include_once("sql.php");
 $sql = new SQL($db);
 
 
-$listeUser = $sql->getUser();
+$listeUser = $sql->getListUsers();
 //$listeJeux = $sql->supprimer();
 ?>
 
@@ -21,6 +21,7 @@ $listeUser = $sql->getUser();
     <td><h3>Liste des utilisateurs :</h3></td>
   </tr>
   <tr>
+    <td>ID</td>
     <td>Nom</td>
     <td>Mot de passe</td>
 
@@ -28,11 +29,12 @@ $listeUser = $sql->getUser();
   </tr>
 	<?php
   foreach ($listeUser as $key => $getUser){
-    $id_user = $listUser->getIdUser();
+    $id_user = $getUser->getIdUser();
+    var_dump($getUser->toHTML());
 		?>
 
 		<tr>
-      <td><?php echo $id_user; ?></td><?php echo $getUser->toHTML().'<td><a href="modifier.php/?id='.$id_user.'">Modifier</a></td>'.'<td><a href="supprimer.php/?id='.$id_user.'">Supprimer</a></td>' ;?>
+      <td><?php echo $id_user; ?></td><?php echo $getUser->toHTML().'<td><a href="modifierUser.php/?id='.$id_user.'">Modifier</a> <a href="supprimerUser.php/?id='.$id_user.'">Supprimer</a></td>' ;?>
 
 		</tr>
 	<?php }
