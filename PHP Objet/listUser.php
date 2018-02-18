@@ -2,7 +2,7 @@
 
 
 ?>
-<form name="form2" id="listJeu" method="post" enctype="multipart/form-data" action="">
+<form name="form2" id="listusers" method="post" enctype="multipart/form-data" action="">
   <?php
 
 include_once('class.user.php');

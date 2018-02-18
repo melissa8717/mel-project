@@ -69,13 +69,9 @@ return $html;
 
 
       public function formulaireConnexionUser(){
-        $html = sprintf('<h2><a href="form_jeu.php">Créer un jeu :</a></h2>')
-        . sprintf('<h2><a href="listJeu.php">Voir les jeux :</a></h2>')
-
-    . sprintf('<h2><a href="form_user.php">Créer un utilisateur :</a></h2><br />')
-        . sprintf('<label>Nom de l\'utilisateur : </label><input type="text" name="nom_user" /><br />',htmlspecialchars($this->nom_user))
+        $html = sprintf('<label>Nom de l\'utilisateur : </label><input type="text" name="nom_user" /><br />',htmlspecialchars($this->nom_user))
         . sprintf('<label>Mot de passe: </label><input type="password" name="mdp_user" /><br />',htmlspecialchars($this->mdp_user))
-              .sprintf(' <input type="submit" value="Entrer" />', htmlspecialchars($this->submit));
+              .sprintf(' <input type="submit" value="Entrer" />');
 
     return $html;
       }

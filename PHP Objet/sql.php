@@ -2,6 +2,8 @@
 class Sql{
 
 	private $_db;
+
+
 public function __construct($db){
 
 	$this->setDb($db);
@@ -12,7 +14,7 @@ public function getList()
 {
 	$jeus =[];
 
-	$q = $this->_db->query('SELECT id_jeu, nomJeu, editeur, anneeSortie, categorie, commentaire, descriptif, nbrJoueur, duree from ludo');
+	$q = $this->_db->query('SELECT id_jeu, nomJeu, editeur, anneeSortie, categorie, commentaire, descriptif, nbrJoueur, duree, statut from ludo');
 
 	while ($donnes = $q->fetch(PDO::FETCH_ASSOC)){
 		$jeus[] = new Jeu($donnes);
@@ -130,8 +132,7 @@ public function getListUser(){
 
 public function getUser($id_user){
 	$q =$this ->_db->prepare('SELECT id_user, nom_user, mdp_user from user WHERE id_user = :id_user');
-	$id_user = $_GET['id'];
-
+	$id_user = $_GET['id_user'];
   $q->bindParam(':id_user', $id_user);
 
 	$q->execute();
@@ -151,10 +152,8 @@ public function modifierUser(){
 	$q = $this->_db->prepare('UPDATE user set nom_user =  :nom_user where id_user = :id_user ');
 	$nom_user = $_POST['nom_user'];
 	$id_user = $_GET['id'];
-	var_dump('toto');
 	$q->bindParam(':id_user', $id_user);
 	$q->bindParam(':nom_user', $nom_user);
-var_dump($q);
 	$q->execute();
 
 	//header('Location: ../listUser.php');
@@ -180,22 +179,26 @@ public function supprimerUser($id_user){
 	$id_user= $_GET['id'];
 
 	$q->bindParam(':id_user', $id_user);
-var_dump($q);
 	$q->execute();
-	//header('Location: ../listJeu.php');
+	header('Location: ../listUser.php');
 
 	}
 
 
-	 public function connexionUser(){
+	 public function connexionUser($data){
+		 if (isset($data['nom_user']) && isset($data['mdp_user'])){
+			 // REquete pour valider le mot de passe;
+			 $query = $this->_db->prepare('SELECT mdp_user FROM user where nom_user = :nom_user');
+			 $query->bindParam(':nom_user', $data['nom_user']);
+			 $query->execute();
+			 $mdp_db = $query->fetch(PDO::FETCH_ASSOC);
 
-	if (isset($_POST['nom_user']) && isset($_POST['mdp_user'])){
 	  //remplacement de $this->pdw par $this->mdp (c'est le nom de la propriété qui est définie dans ton objet que tu dois utiliser)
-		if($this->nom_user == $_POST['nom_user'] && $this->mdp_user == $_POST['mdp_user']){
+		if($mdp_db['mdp_user'] == $data['mdp_user']){
 			session_start();
-			$_SESSION['nom_user'] = $_POST['login'];
-			$_SESSION['mdp'] = $_POST['mdp'];
-	   header('Location: form_jeu.php');
+			$_SESSION['nom_user'] = $_POST['nom_user'];
+			$_SESSION['mdp_user'] = $_POST['mdp_user'];
+	  header('Location: emprunt.php');
 	//exit();
 
 		}
@@ -205,4 +208,39 @@ var_dump($q);
 
 }
 
+public function empruntJeu(){
+
+
+
+	$q = $this->_db->prepare('UPDATE ludo set statut = "Emprunté", id_user = :id_user where id_jeu = :id_jeu ');
+	$id_jeu = $_GET['id'];
+	$id_user = $_GET['id_user'];
+	$q->bindParam(':id_user', $id_user);
+	$q->bindParam(':id_jeu', $id_jeu);
+	$q->execute();
+}
+
+public function getIdUser($nom_user){
+
+		$query = $this->_db->prepare('SELECT id_user FROM user where nom_user = :nom_user');
+		$query->bindParam(':nom_user', $nom_user);
+		$query->execute();
+		$id_user = $query->fetch(PDO::FETCH_ASSOC);
+
+		return $id_user['id_user'];
+
+ }
+
+
+public function getJeuEmprunt($id_user){
+	$query = $this->_db->prepare('SELECT * FROM ludo WHERE id_user = :id_user');
+	$query->bindParam(':id_user', $id_user);
+	$query->execute();
+
+	while ($donnes = $query->fetch(PDO::FETCH_ASSOC)){
+		$jeux[] = new Jeu($donnes);
+	}
+
+	return $jeux;
+	}
 }

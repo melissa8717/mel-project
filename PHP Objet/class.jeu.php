@@ -8,9 +8,10 @@ class Jeu {
   private $_duree;
   private $_nbrJoueur;
   private $_commentaire;
-//  private $_submit;
   private $_id_jeu;
-  public function __construct($data = ['nomJeu' => '', 'editeur'=> '', 'anneeSortie' => '', 'descriptif' => '', 'categorie' => '', 'duree' => '', 'nbrJoueur' => '', 'commentaire' => '', 'id_jeu' =>'']){
+  private $_statut;
+
+  public function __construct($data = ['nomJeu' => '', 'editeur'=> '', 'anneeSortie' => '', 'descriptif' => '', 'categorie' => '', 'duree' => '', 'nbrJoueur' => '', 'commentaire' => '', 'id_jeu' =>'', 'statut' => '']){
     $this->nomJeu= $data['nomJeu'];
     $this->editeur = $data['editeur'];
     $this->anneeSortie = $data['anneeSortie'];
@@ -20,12 +21,15 @@ class Jeu {
     $this->nbrJoueur = $data['nbrJoueur'];
     $this->commentaire = $data['commentaire'];
     $this->id_jeu = $data['id_jeu'];
-
-  //  $this->submit = $date['submit'];
+    $this->statut = $data['statut'];
   }
 
   public function getIdJeu(){
     return $this->id_jeu;
+  }
+
+  public function getStatutJeu(){
+    return $this->statut;
   }
 
 
@@ -33,7 +37,7 @@ class Jeu {
     $html = sprintf('<h2><a href="class.jeu.php">Créer un jeu :</a></h2>')
     . sprintf('<h2><a href="listJeu.php">Voir les jeux :</a></h2>')
 . sprintf('<h2><a href="form_user.php">Créer un utilisateur :</a></h2><br />')
-. sprintf('<label>Numéro du jeu : </label><input type="text" name="nom_jeu" /><br />',htmlspecialchars($this->id_jeu))
+//. sprintf('<label>Numéro du jeu : </label><input type="text" name="nom_jeu" /><br />',htmlspecialchars($this->id_jeu))
     . sprintf('<label>Nom du jeu : </label><input type="text" name="nom_jeu" /><br />',htmlspecialchars($this->nomJeu))
           .sprintf('<label>Editeur : </label><input type="text" name="editeur" /><br />',htmlspecialchars($this->editeur))
           .sprintf(' <label>Année de sortie : </label><input type="number" name="annee_sortie" /><br />',htmlspecialchars($this->anneeSortie))
@@ -49,6 +53,10 @@ class Jeu {
           .sprintf('  <label>Durée en minutes : </label><input type="number" name="duree" /><br />',htmlspecialchars($this->duree))
           .sprintf('  <label>Nombre de joueurs : </label><input type="number" name="nbr_joueur" /><br />',htmlspecialchars($this->nbrJoueur))
           .sprintf('  <label>Commentaire : </label><textarea name="commentaire"></textarea><br />', htmlspecialchars($this->commentaire))
+          .sprintf(' <label>Statut :
+                    <select name="statut">
+                <option value="libre">Libre</option>
+                <option value="emprunte">Emprunté</option> <br />', htmlspecialchars($this->statut))
           .sprintf(' <input type="submit" value="Valider" />');
 
 return $html;
@@ -65,7 +73,7 @@ return $html;
           .sprintf(' <label>Catégorie :
                   <select name="categorie" value="'.$this->categorie.'">
               <option value="familiale">Familiale</option>
-              <option value="figurine">Figurine</option>
+          <option value="figurine">Figurine</option>
               <option value="gestion">Gestion</option>
               <option value="expert">Expert</option>
               <option value="apero">Apéro</option>
