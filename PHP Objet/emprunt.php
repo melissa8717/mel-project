@@ -23,7 +23,7 @@ $id_user = $sql->getIdUser($nom_user);
 //$listeJeux = $sql->supprimer();
 ?>
 <h2><a href="../listJeu.php">Voir les jeux :</a></h2>
-<h2>Voir mes jeux empruntes : </h2>
+<td><a href="../listJeuEmprunte.php/?id_user=<?php echo $id_user;?>">Voir mes jeux empruntés</a></td>
 
 
 <table>
